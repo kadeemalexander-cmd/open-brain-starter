@@ -358,13 +358,8 @@ footer.foot {
 <p>The vault is just markdown. Open it with anything — VS Code, vim, Obsidian. <a href="https://obsidian.md" target="_blank" rel="noopener">Obsidian</a> is free and ships with a graph view that turns the wiki into a force-directed network. Run it for a few weeks and the actual shape of how you think shows up.</p>
 
 <figure class="plate">
-  <img src="assets/brain-graph-1.png" alt="Force-directed graph of an Open Brain vault in Obsidian, showing two large clusters at the bottom and a smaller looser cluster at the top — labels intentionally blurred." loading="lazy" />
-  <figcaption><span class="fignum">Fig. 1</span> An Open Brain vault in Obsidian's graph view after a few weeks of capture. Three loose clusters representing the three domains, with thin bridges where ideas cross. Each dot is a thought; each line is a backlink. Node labels blurred for privacy — what matters here is the shape, not the names.</figcaption>
-</figure>
-
-<figure class="plate">
-  <img src="assets/brain-graph-2.png" alt="Same Obsidian graph view with a tighter zoom — three dense clusters and a sparse field of stragglers — labels blurred." loading="lazy" />
-  <figcaption><span class="fignum">Fig. 2</span> Same brain, different framing. Dense regions are topics you've thought about a lot. Stragglers around the edges are one-off captures that haven't found their home yet — they get adopted into a cluster as more related thoughts land.</figcaption>
+  <img src="assets/brain-graph.png" alt="Force-directed graph of an Open Brain vault in Obsidian, showing connected clusters of thoughts." loading="lazy" />
+  <figcaption><span class="fignum">Fig. 1</span> An Open Brain vault in Obsidian's graph view after a few weeks of capture. Each dot is a thought; each line is a backlink. The clusters are the domains. Dense regions are topics you've thought about a lot; stragglers around the edges are one-off captures that get adopted into a cluster as more related thoughts land.</figcaption>
 </figure>
 
 <p>What you don't see in a screenshot: the search. <code>search_thoughts("the time I figured out how to fix the deploy")</code> returns the right thought even if those exact words aren't in it, because it's matching on the embedding, not the text. That's where the brain stops being a wiki and starts being a memory.</p>
