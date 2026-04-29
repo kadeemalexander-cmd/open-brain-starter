@@ -222,7 +222,7 @@ figure.plate {
 @media (min-width: 880px) {
   figure.plate { margin: 36px -120px; }
 }
-figure.plate svg {
+figure.plate svg, figure.plate img {
   display: block;
   width: 100%;
   height: auto;
@@ -358,90 +358,13 @@ footer.foot {
 <p>The vault is just markdown. Open it with anything — VS Code, vim, Obsidian. <a href="https://obsidian.md" target="_blank" rel="noopener">Obsidian</a> is free and ships with a graph view that turns the wiki into a force-directed network. Run it for a few weeks and the actual shape of how you think shows up.</p>
 
 <figure class="plate">
-  <svg viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract force-directed graph showing three clusters of connected nodes representing the three domains of an Open Brain vault.">
-    <defs>
-      <radialGradient id="bg" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#1a2027"/>
-        <stop offset="100%" stop-color="#0d1117"/>
-      </radialGradient>
-      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="0.6"/>
-      </filter>
-    </defs>
-    <rect width="800" height="460" fill="url(#bg)"/>
-    <g stroke="rgba(199,209,219,0.18)" stroke-width="0.8" fill="none">
-      <!-- Cluster A (top-left) edges -->
-      <path d="M 180 130 L 220 110 M 180 130 L 200 170 M 180 130 L 150 100 M 180 130 L 240 145 M 220 110 L 260 95 M 220 110 L 240 145 M 200 170 L 240 145 M 200 170 L 165 195 M 200 170 L 235 195 M 150 100 L 120 130 M 240 145 L 285 135 M 285 135 L 260 95 M 285 135 L 310 110 M 235 195 L 270 215 M 165 195 L 130 175 M 130 175 L 120 130"/>
-      <!-- Cluster B (right) edges -->
-      <path d="M 580 200 L 620 175 M 580 200 L 605 235 M 580 200 L 545 220 M 580 200 L 610 145 M 620 175 L 655 195 M 620 175 L 660 145 M 660 145 L 690 175 M 690 175 L 720 200 M 655 195 L 685 230 M 605 235 L 645 255 M 545 220 L 510 240 M 510 240 L 540 270 M 540 270 L 580 285 M 645 255 L 685 230 M 685 230 L 700 265 M 700 265 L 730 250 M 580 285 L 610 270 M 610 145 L 660 145 M 580 200 L 580 285"/>
-      <!-- Cluster C (bottom-left) edges -->
-      <path d="M 220 330 L 260 305 M 220 330 L 195 360 M 220 330 L 175 305 M 260 305 L 295 320 M 260 305 L 285 270 M 295 320 L 320 350 M 295 320 L 330 295 M 195 360 L 230 380 M 175 305 L 145 330 M 230 380 L 270 365 M 270 365 L 295 320 M 145 330 L 130 365 M 285 270 L 320 250"/>
-      <!-- Bridge edges between clusters (sparse) -->
-      <path d="M 310 110 L 410 130 M 410 130 L 510 240 M 320 250 L 410 280 M 410 280 L 510 240 M 285 135 L 320 250"/>
-    </g>
-    <!-- Cluster A nodes (top-left) -->
-    <g fill="#c9d1d9">
-      <circle cx="180" cy="130" r="6.5"/>
-      <circle cx="220" cy="110" r="4.5"/>
-      <circle cx="200" cy="170" r="5"/>
-      <circle cx="150" cy="100" r="3.5"/>
-      <circle cx="240" cy="145" r="5.5"/>
-      <circle cx="260" cy="95" r="4"/>
-      <circle cx="285" cy="135" r="3.5"/>
-      <circle cx="310" cy="110" r="3"/>
-      <circle cx="235" cy="195" r="3.5"/>
-      <circle cx="165" cy="195" r="3"/>
-      <circle cx="130" cy="175" r="3.5"/>
-      <circle cx="120" cy="130" r="3"/>
-      <circle cx="270" cy="215" r="2.5"/>
-    </g>
-    <!-- Cluster B nodes (right) -->
-    <g fill="#c9d1d9">
-      <circle cx="580" cy="200" r="7"/>
-      <circle cx="620" cy="175" r="5"/>
-      <circle cx="605" cy="235" r="4.5"/>
-      <circle cx="545" cy="220" r="4"/>
-      <circle cx="610" cy="145" r="4"/>
-      <circle cx="655" cy="195" r="5"/>
-      <circle cx="660" cy="145" r="3.5"/>
-      <circle cx="690" cy="175" r="3.5"/>
-      <circle cx="720" cy="200" r="3"/>
-      <circle cx="685" cy="230" r="4"/>
-      <circle cx="645" cy="255" r="3.5"/>
-      <circle cx="510" cy="240" r="4"/>
-      <circle cx="540" cy="270" r="3.5"/>
-      <circle cx="580" cy="285" r="4.5"/>
-      <circle cx="610" cy="270" r="3"/>
-      <circle cx="700" cy="265" r="3"/>
-      <circle cx="730" cy="250" r="2.5"/>
-    </g>
-    <!-- Cluster C nodes (bottom-left) -->
-    <g fill="#c9d1d9">
-      <circle cx="220" cy="330" r="6"/>
-      <circle cx="260" cy="305" r="5"/>
-      <circle cx="195" cy="360" r="4"/>
-      <circle cx="175" cy="305" r="4"/>
-      <circle cx="295" cy="320" r="5.5"/>
-      <circle cx="285" cy="270" r="3.5"/>
-      <circle cx="320" cy="350" r="3.5"/>
-      <circle cx="330" cy="295" r="3"/>
-      <circle cx="230" cy="380" r="3.5"/>
-      <circle cx="270" cy="365" r="3.5"/>
-      <circle cx="145" cy="330" r="3.5"/>
-      <circle cx="130" cy="365" r="2.5"/>
-      <circle cx="320" cy="250" r="3"/>
-    </g>
-    <!-- Stragglers -->
-    <g fill="rgba(201,209,219,0.6)">
-      <circle cx="430" cy="60" r="2.5"/>
-      <circle cx="470" cy="395" r="2.5"/>
-      <circle cx="60" cy="240" r="2.5"/>
-      <circle cx="760" cy="100" r="2.5"/>
-      <circle cx="410" cy="130" r="3"/>
-      <circle cx="410" cy="280" r="3"/>
-    </g>
-  </svg>
-  <figcaption><span class="fignum">Fig. 1</span> What an Open Brain vault tends to look like in graph view after a few weeks of capture: three loose clusters representing your domains, with thin bridges where ideas cross. Each dot is a thought; each line is a backlink. Stragglers around the edges are one-off captures that get adopted into a cluster as more related thoughts land.</figcaption>
+  <img src="assets/brain-graph-1.png" alt="Force-directed graph of an Open Brain vault in Obsidian, showing two large clusters at the bottom and a smaller looser cluster at the top — labels intentionally blurred." loading="lazy" />
+  <figcaption><span class="fignum">Fig. 1</span> An Open Brain vault in Obsidian's graph view after a few weeks of capture. Three loose clusters representing the three domains, with thin bridges where ideas cross. Each dot is a thought; each line is a backlink. Node labels blurred for privacy — what matters here is the shape, not the names.</figcaption>
+</figure>
+
+<figure class="plate">
+  <img src="assets/brain-graph-2.png" alt="Same Obsidian graph view with a tighter zoom — three dense clusters and a sparse field of stragglers — labels blurred." loading="lazy" />
+  <figcaption><span class="fignum">Fig. 2</span> Same brain, different framing. Dense regions are topics you've thought about a lot. Stragglers around the edges are one-off captures that haven't found their home yet — they get adopted into a cluster as more related thoughts land.</figcaption>
 </figure>
 
 <p>What you don't see in a screenshot: the search. <code>search_thoughts("the time I figured out how to fix the deploy")</code> returns the right thought even if those exact words aren't in it, because it's matching on the embedding, not the text. That's where the brain stops being a wiki and starts being a memory.</p>
