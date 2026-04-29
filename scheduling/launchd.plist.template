@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Open Brain — nightly compile via macOS launchd.
+
+  1. Edit the YOUR-* placeholders below.
+  2. Save to ~/Library/LaunchAgents/com.openbrain.compile.plist
+  3. Load it: launchctl load ~/Library/LaunchAgents/com.openbrain.compile.plist
+  4. Verify:  launchctl list | grep openbrain
+  5. Test now: launchctl start com.openbrain.compile
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.openbrain.compile</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>YOUR-HOME/open-brain/meta/wiki-compile.py</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>SUPABASE_URL</key>
+    <string>https://YOUR-PROJECT.supabase.co</string>
+    <key>OB_VAULT</key>
+    <string>YOUR-HOME/open-brain</string>
+    <key>OB_SECRET_PATH</key>
+    <string>YOUR-HOME/.open-brain-supabase-secret</string>
+  </dict>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>5</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>YOUR-HOME/open-brain/meta/dream-logs/launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>YOUR-HOME/open-brain/meta/dream-logs/launchd.err</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>

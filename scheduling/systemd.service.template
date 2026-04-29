@@ -1,0 +1,31 @@
+# Open Brain — nightly compile via systemd (Linux).
+#
+# 1. Edit the YOUR-* placeholders.
+# 2. Save the .service file to ~/.config/systemd/user/openbrain-compile.service
+# 3. Save the matching .timer file (below) to the same directory.
+# 4. systemctl --user daemon-reload
+# 5. systemctl --user enable --now openbrain-compile.timer
+# 6. Verify: systemctl --user list-timers
+#
+# ──── openbrain-compile.service ─────────────────────────────────────────────
+[Unit]
+Description=Open Brain wiki compile
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/open-brain
+Environment=SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+Environment=OB_VAULT=%h/open-brain
+Environment=OB_SECRET_PATH=%h/.open-brain-supabase-secret
+ExecStart=/usr/bin/python3 %h/open-brain/meta/wiki-compile.py
+
+# ──── openbrain-compile.timer (separate file) ───────────────────────────────
+# [Unit]
+# Description=Run Open Brain compile nightly at 05:00
+#
+# [Timer]
+# OnCalendar=*-*-* 05:00:00
+# Persistent=true
+#
+# [Install]
+# WantedBy=timers.target

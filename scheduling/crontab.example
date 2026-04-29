@@ -1,0 +1,10 @@
+# Open Brain — nightly compile via cron.
+# Edit the user crontab with `crontab -e` and add the line below
+# (adjust paths and time to taste).
+
+# Field order: minute hour day month weekday command
+# This runs at 5:00 AM every day.
+0 5 * * * cd $HOME/open-brain && /usr/bin/env SUPABASE_URL=https://YOUR-PROJECT.supabase.co OB_VAULT=$HOME/open-brain /usr/bin/python3 meta/wiki-compile.py >> meta/dream-logs/cron.log 2>&1
+
+# Optional: memory-sync at 4 AM, an hour before the compile.
+# 0 4 * * * MCP_URL=https://YOUR-PROJECT.supabase.co/functions/v1/open-brain-mcp MCP_ACCESS_KEY=YOUR-KEY /usr/bin/python3 $HOME/open-brain/memory-sync/sync-memory.py >> $HOME/open-brain/meta/dream-logs/memory-sync.log 2>&1

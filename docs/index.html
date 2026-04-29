@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Open Brain — A Setup Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f7f5f0;
+  --ink: #0d0e10;
+  --slate: #2a2d33;
+  --muted: #5a5f68;
+  --warm: #c47e4d;
+  --rule: rgba(13,14,16,.10);
+  --code-bg: #0d1117;
+  --code-fg: #c9d1d9;
+  --code-mute: #8b949e;
+  --code-green: #7ee787;
+  --code-amber: #ffa657;
+  --code-cyan: #79c0ff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+.progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--warm), var(--ink));
+  width: 0%;
+  z-index: 100;
+  transition: width .08s linear;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 28px 22px 96px; }
+@media (min-width: 880px) { .wrap { padding: 56px 0 120px; } }
+
+header.masthead {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+.masthead .ticker { display: inline-flex; gap: 10px; align-items: baseline; }
+.masthead .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--warm); display: inline-block; transform: translateY(-1px); }
+.masthead a {
+  color: var(--ink); text-decoration: none;
+  border-bottom: 1px dotted var(--ink);
+  padding-bottom: 1px;
+}
+
+.kicker {
+  margin: 44px 0 12px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+h1 {
+  font-family: 'Fraunces', 'Tiempos Headline', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(40px, 7vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  margin-bottom: 18px;
+}
+h1 em { font-style: italic; color: var(--warm); }
+.deck {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2.6vw, 25px);
+  line-height: 1.42;
+  color: var(--slate);
+  max-width: 56ch;
+  margin-bottom: 28px;
+}
+.byline {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+  margin-bottom: 36px;
+}
+
+.callout {
+  border-left: 3px solid var(--warm);
+  padding: 14px 18px;
+  margin: 28px 0;
+  background: rgba(196, 126, 77, 0.06);
+  border-radius: 0 8px 8px 0;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 17.5px;
+  line-height: 1.55;
+  color: var(--slate);
+}
+
+h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(26px, 3.6vw, 34px);
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+  margin: 56px 0 14px;
+  scroll-margin-top: 24px;
+}
+h2 .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45em;
+  font-weight: 500;
+  color: var(--warm);
+  margin-right: 12px;
+  letter-spacing: 0.08em;
+  vertical-align: 0.4em;
+  font-style: normal;
+}
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  margin: 30px 0 10px;
+  letter-spacing: -0.005em;
+}
+
+p { margin: 14px 0; max-width: 64ch; }
+
+ul, ol { padding-left: 22px; margin: 14px 0; max-width: 64ch; }
+li { margin: 6px 0; }
+li > strong { color: var(--ink); }
+
+a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--warm); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+a:hover { color: var(--warm); }
+
+code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.86em;
+  background: rgba(13,14,16,.06);
+  padding: 1.5px 6px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+pre {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 18px 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin: 18px 0;
+  border: 1px solid #1a2027;
+}
+pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+.tk-kw { color: #ff7b72; }
+.tk-fn { color: var(--code-cyan); }
+.tk-str { color: var(--code-amber); }
+.tk-num { color: var(--code-amber); }
+.tk-mute { color: var(--code-mute); }
+
+.diagram {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.45;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 18px 14px;
+  border-radius: 10px;
+  margin: 22px 0;
+  white-space: pre;
+  overflow-x: auto;
+  border: 1px solid #1a2027;
+  max-width: 100%;
+}
+
+.table-wrap { overflow-x: auto; margin: 22px 0; -webkit-overflow-scrolling: touch; }
+table {
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+th {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--muted);
+}
+td code { font-size: 12.5px; }
+
+figure.plate {
+  margin: 32px -8px;
+  padding: 0;
+}
+@media (min-width: 880px) {
+  figure.plate { margin: 36px -120px; }
+}
+figure.plate svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 30px 60px -30px rgba(13,14,16,.55), 0 0 0 1px rgba(13,14,16,.06);
+  background: var(--code-bg);
+}
+figure.plate figcaption {
+  margin-top: 14px;
+  padding: 0 8px;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 64ch;
+}
+figure.plate .fignum {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-style: normal;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-right: 10px;
+}
+
+.steps {
+  counter-reset: step;
+  padding-left: 0;
+  list-style: none;
+  margin: 22px 0;
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 4px 0 14px 44px;
+  border-bottom: 1px solid var(--rule);
+  margin: 0;
+}
+.steps li:last-child { border-bottom: none; }
+.steps li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 4px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+
+footer.foot {
+  margin-top: 80px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .progress { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="wrap">
+
+<header class="masthead">
+  <span class="ticker"><span class="dot"></span>open-brain-starter</span>
+  <span><a href="https://github.com/kadeemalexander-cmd/open-brain-starter">repo →</a></span>
+</header>
+
+<div class="kicker">— A second brain that doesn't rot</div>
+<h1>Open <em>Brain</em>.</h1>
+<p class="deck">A compiled second brain. Database is canonical, the wiki is a regenerated view. Any AI client that speaks MCP can read and write to it. Built on Supabase + pgvector. No paid SaaS, no proprietary format.</p>
+<div class="byline">~45 min to stand one up · MIT licensed · fork freely</div>
+
+<div class="callout">
+  Why this design: a Karpathy-style markdown wiki rots — you forget to update it and silent drift kills trust. Open Brain inverts that: capture a thought, it lands in the database with an embedding and metadata, and the wiki recompiles itself nightly. To fix wrong info, you capture a corrective thought; you never edit the markdown.
+</div>
+
+<h2 id="model"><span class="num">01</span>Mental model</h2>
+
+<div class="diagram">                  ┌──────────────────────────────────────┐
+   Capture        │          AI client (Claude Code,     │
+   a thought ───▶ │    Claude Desktop, Cursor, Codex,    │
+                  │            ChatGPT Dev Mode)         │
+                  └──────────────────────┬───────────────┘
+                                         │ MCP
+                                         ▼
+                  ┌──────────────────────────────────────┐
+                  │      Supabase Edge Function          │
+                  │      (open-brain-mcp)                │
+                  │                                      │
+                  │  capture_thought  ◀── tool calls    │
+                  │  search_thoughts                     │
+                  │  list_thoughts                       │
+                  │  thought_stats                       │
+                  └──────────────────────┬───────────────┘
+                                         │
+                                         ▼
+                  ┌──────────────────────────────────────┐
+                  │   Supabase Postgres + pgvector       │
+                  │   thoughts(content, embedding,       │
+                  │            metadata, created_at)     │
+                  └──────────────────────┬───────────────┘
+                                         │
+                          nightly        │ PostgREST read
+                          ┌──────────────┘
+                          ▼
+                  ┌──────────────────────────────────────┐
+                  │   wiki-compile.py (5 AM cron)        │
+                  │   regenerates ./your-vault/          │
+                  │   one .md page per topic cluster     │
+                  └──────────────────────────────────────┘</div>
+
+<p>Three persistent moving parts: a Supabase project, a Python compiler, a scheduled task. Everything else (which AI client you use, which folders you organize into, which import recipes you run) is your call.</p>
+
+<h2 id="look" style="font-style:italic;">A look inside</h2>
+
+<p>The vault is just markdown. Open it with anything — VS Code, vim, Obsidian. <a href="https://obsidian.md" target="_blank" rel="noopener">Obsidian</a> is free and ships with a graph view that turns the wiki into a force-directed network. Run it for a few weeks and the actual shape of how you think shows up.</p>
+
+<figure class="plate">
+  <svg viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract force-directed graph showing three clusters of connected nodes representing the three domains of an Open Brain vault.">
+    <defs>
+      <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#1a2027"/>
+        <stop offset="100%" stop-color="#0d1117"/>
+      </radialGradient>
+      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="0.6"/>
+      </filter>
+    </defs>
+    <rect width="800" height="460" fill="url(#bg)"/>
+    <g stroke="rgba(199,209,219,0.18)" stroke-width="0.8" fill="none">
+      <!-- Cluster A (top-left) edges -->
+      <path d="M 180 130 L 220 110 M 180 130 L 200 170 M 180 130 L 150 100 M 180 130 L 240 145 M 220 110 L 260 95 M 220 110 L 240 145 M 200 170 L 240 145 M 200 170 L 165 195 M 200 170 L 235 195 M 150 100 L 120 130 M 240 145 L 285 135 M 285 135 L 260 95 M 285 135 L 310 110 M 235 195 L 270 215 M 165 195 L 130 175 M 130 175 L 120 130"/>
+      <!-- Cluster B (right) edges -->
+      <path d="M 580 200 L 620 175 M 580 200 L 605 235 M 580 200 L 545 220 M 580 200 L 610 145 M 620 175 L 655 195 M 620 175 L 660 145 M 660 145 L 690 175 M 690 175 L 720 200 M 655 195 L 685 230 M 605 235 L 645 255 M 545 220 L 510 240 M 510 240 L 540 270 M 540 270 L 580 285 M 645 255 L 685 230 M 685 230 L 700 265 M 700 265 L 730 250 M 580 285 L 610 270 M 610 145 L 660 145 M 580 200 L 580 285"/>
+      <!-- Cluster C (bottom-left) edges -->
+      <path d="M 220 330 L 260 305 M 220 330 L 195 360 M 220 330 L 175 305 M 260 305 L 295 320 M 260 305 L 285 270 M 295 320 L 320 350 M 295 320 L 330 295 M 195 360 L 230 380 M 175 305 L 145 330 M 230 380 L 270 365 M 270 365 L 295 320 M 145 330 L 130 365 M 285 270 L 320 250"/>
+      <!-- Bridge edges between clusters (sparse) -->
+      <path d="M 310 110 L 410 130 M 410 130 L 510 240 M 320 250 L 410 280 M 410 280 L 510 240 M 285 135 L 320 250"/>
+    </g>
+    <!-- Cluster A nodes (top-left) -->
+    <g fill="#c9d1d9">
+      <circle cx="180" cy="130" r="6.5"/>
+      <circle cx="220" cy="110" r="4.5"/>
+      <circle cx="200" cy="170" r="5"/>
+      <circle cx="150" cy="100" r="3.5"/>
+      <circle cx="240" cy="145" r="5.5"/>
+      <circle cx="260" cy="95" r="4"/>
+      <circle cx="285" cy="135" r="3.5"/>
+      <circle cx="310" cy="110" r="3"/>
+      <circle cx="235" cy="195" r="3.5"/>
+      <circle cx="165" cy="195" r="3"/>
+      <circle cx="130" cy="175" r="3.5"/>
+      <circle cx="120" cy="130" r="3"/>
+      <circle cx="270" cy="215" r="2.5"/>
+    </g>
+    <!-- Cluster B nodes (right) -->
+    <g fill="#c9d1d9">
+      <circle cx="580" cy="200" r="7"/>
+      <circle cx="620" cy="175" r="5"/>
+      <circle cx="605" cy="235" r="4.5"/>
+      <circle cx="545" cy="220" r="4"/>
+      <circle cx="610" cy="145" r="4"/>
+      <circle cx="655" cy="195" r="5"/>
+      <circle cx="660" cy="145" r="3.5"/>
+      <circle cx="690" cy="175" r="3.5"/>
+      <circle cx="720" cy="200" r="3"/>
+      <circle cx="685" cy="230" r="4"/>
+      <circle cx="645" cy="255" r="3.5"/>
+      <circle cx="510" cy="240" r="4"/>
+      <circle cx="540" cy="270" r="3.5"/>
+      <circle cx="580" cy="285" r="4.5"/>
+      <circle cx="610" cy="270" r="3"/>
+      <circle cx="700" cy="265" r="3"/>
+      <circle cx="730" cy="250" r="2.5"/>
+    </g>
+    <!-- Cluster C nodes (bottom-left) -->
+    <g fill="#c9d1d9">
+      <circle cx="220" cy="330" r="6"/>
+      <circle cx="260" cy="305" r="5"/>
+      <circle cx="195" cy="360" r="4"/>
+      <circle cx="175" cy="305" r="4"/>
+      <circle cx="295" cy="320" r="5.5"/>
+      <circle cx="285" cy="270" r="3.5"/>
+      <circle cx="320" cy="350" r="3.5"/>
+      <circle cx="330" cy="295" r="3"/>
+      <circle cx="230" cy="380" r="3.5"/>
+      <circle cx="270" cy="365" r="3.5"/>
+      <circle cx="145" cy="330" r="3.5"/>
+      <circle cx="130" cy="365" r="2.5"/>
+      <circle cx="320" cy="250" r="3"/>
+    </g>
+    <!-- Stragglers -->
+    <g fill="rgba(201,209,219,0.6)">
+      <circle cx="430" cy="60" r="2.5"/>
+      <circle cx="470" cy="395" r="2.5"/>
+      <circle cx="60" cy="240" r="2.5"/>
+      <circle cx="760" cy="100" r="2.5"/>
+      <circle cx="410" cy="130" r="3"/>
+      <circle cx="410" cy="280" r="3"/>
+    </g>
+  </svg>
+  <figcaption><span class="fignum">Fig. 1</span> What an Open Brain vault tends to look like in graph view after a few weeks of capture: three loose clusters representing your domains, with thin bridges where ideas cross. Each dot is a thought; each line is a backlink. Stragglers around the edges are one-off captures that get adopted into a cluster as more related thoughts land.</figcaption>
+</figure>
+
+<p>What you don't see in a screenshot: the search. <code>search_thoughts("the time I figured out how to fix the deploy")</code> returns the right thought even if those exact words aren't in it, because it's matching on the embedding, not the text. That's where the brain stops being a wiki and starts being a memory.</p>
+
+<h2 id="components"><span class="num">02</span>Components</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Component</th><th>Purpose</th><th>Where it lives</th></tr></thead>
+<tbody>
+<tr><td>Supabase project</td><td>Stores <code>thoughts</code> table + pgvector embeddings</td><td>Hosted Supabase (free tier is plenty)</td></tr>
+<tr><td><code>open-brain-mcp</code> Edge Function</td><td>HTTP MCP server. Implements <code>capture_thought</code>, <code>search_thoughts</code>, <code>list_thoughts</code>, <code>thought_stats</code></td><td>Deployed inside your Supabase project</td></tr>
+<tr><td><code>wiki-compile.py</code></td><td>Reads thoughts via PostgREST, clusters by topic, writes one .md per topic to <code>&lt;vault&gt;/&lt;domain&gt;/compiled/</code></td><td>Local on your machine</td></tr>
+<tr><td>Scheduled task</td><td>Runs the compiler nightly</td><td>macOS launchd, Linux systemd, or cron</td></tr>
+<tr><td>Vault</td><td>The compiled markdown view, viewable in Obsidian/VS Code/whatever</td><td>Local folder, e.g. <code>~/open-brain/</code></td></tr>
+<tr><td>memory-sync (optional)</td><td>Pushes Claude Code's local memory files into Open Brain</td><td>Same machine, scheduled separately</td></tr>
+</tbody></table></div>
+
+<h2 id="schema"><span class="num">03</span>Database schema</h2>
+<p>Single table, single index strategy. Run as a Supabase SQL migration:</p>
+<pre><code><span class="tk-kw">create extension if not exists</span> vector;
+
+<span class="tk-kw">create table if not exists</span> thoughts (
+  id                  <span class="tk-fn">uuid</span> default gen_random_uuid() primary key,
+  content             <span class="tk-fn">text</span> not null,
+  embedding           <span class="tk-fn">vector</span>(<span class="tk-num">1536</span>),
+  metadata            <span class="tk-fn">jsonb</span> default <span class="tk-str">'{}'</span>::jsonb,
+  content_fingerprint <span class="tk-fn">text</span>,
+  created_at          <span class="tk-fn">timestamptz</span> default now(),
+  updated_at          <span class="tk-fn">timestamptz</span> default now()
+);
+
+<span class="tk-kw">create index if not exists</span> thoughts_embedding_idx
+  on thoughts using hnsw (embedding vector_cosine_ops);
+
+<span class="tk-kw">create index if not exists</span> thoughts_metadata_idx
+  on thoughts using gin (metadata);
+
+<span class="tk-kw">create index if not exists</span> thoughts_created_at_idx
+  on thoughts (created_at desc);
+
+<span class="tk-kw">create unique index if not exists</span> idx_thoughts_fingerprint
+  on thoughts (content_fingerprint) where content_fingerprint is not null;</code></pre>
+
+<p>Full schema (including the search function, RLS policy, and the <code>upsert_thought</code> dedupe function) is in <a href="https://github.com/kadeemalexander-cmd/open-brain-starter/blob/main/schema.sql"><code>schema.sql</code></a>.</p>
+
+<p><code>embedding</code> is 1536-dim (OpenAI <code>text-embedding-3-small</code>). <code>metadata</code> is JSONB — the MCP server fills in <code>topics[]</code>, <code>people[]</code>, <code>type</code> (<code>observation</code> / <code>task</code> / <code>idea</code> / <code>reference</code> / <code>person_note</code>), <code>action_items[]</code>, <code>folder</code> (domain hint), and <code>source</code> automatically. <code>content_fingerprint</code> is SHA-256 of normalized content; the unique index gives you free dedupe via upsert.</p>
+
+<h2 id="mcp"><span class="num">04</span>The MCP server</h2>
+<p>Deno + Hono inside a Supabase Edge Function. Four tools, one HTTP endpoint. Required env vars:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Variable</th><th>What</th></tr></thead>
+<tbody>
+<tr><td><code>SUPABASE_URL</code></td><td>Your project URL (auto-populated by Supabase)</td></tr>
+<tr><td><code>SUPABASE_SERVICE_ROLE_KEY</code></td><td>Auto-populated by Supabase</td></tr>
+<tr><td><code>OPENROUTER_API_KEY</code></td><td>For embeddings + metadata extraction. Free tier covers casual usage. Swap for local Ollama if you want zero third-party.</td></tr>
+<tr><td><code>MCP_ACCESS_KEY</code></td><td>Shared secret. Required on every HTTP call as the <code>x-brain-key</code> header.</td></tr>
+</tbody></table></div>
+
+<h3>Deploy</h3>
+<pre><code>supabase functions deploy open-brain-mcp
+supabase secrets set OPENROUTER_API_KEY=sk-... <span class="tk-mute">\</span>
+                     MCP_ACCESS_KEY=$(openssl rand -hex 32)</code></pre>
+
+<h3>Smoke test</h3>
+<pre><code>curl -X POST https://&lt;your-project&gt;.supabase.co/functions/v1/open-brain-mcp <span class="tk-mute">\</span>
+  -H <span class="tk-str">"x-brain-key: $MCP_ACCESS_KEY"</span> <span class="tk-mute">\</span>
+  -H <span class="tk-str">"Accept: application/json, text/event-stream"</span> <span class="tk-mute">\</span>
+  -H <span class="tk-str">"Content-Type: application/json"</span> <span class="tk-mute">\</span>
+  -d <span class="tk-str">'{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"capture_thought","arguments":{"content":"hello brain"}}}'</span></code></pre>
+
+<h2 id="compiler"><span class="num">05</span>The compiler</h2>
+<p><a href="https://github.com/kadeemalexander-cmd/open-brain-starter/blob/main/compiler/wiki-compile.py"><code>wiki-compile.py</code></a> is one file, no external deps beyond <code>requests</code>. It:</p>
+<ol>
+<li>Reads thoughts from Supabase via PostgREST (<code>/rest/v1/thoughts?select=...&amp;order=created_at.desc</code>)</li>
+<li>Routes each thought to a domain by <code>metadata.folder</code>, then by topic keywords, then by content scan, then defaults to <code>DEFAULT_DOMAIN</code></li>
+<li>Wipes <code>&lt;vault&gt;/&lt;domain&gt;/compiled/</code></li>
+<li>Writes one <code>&lt;topic&gt;.md</code> per primary topic, with frontmatter (<code>title</code>, <code>domain</code>, <code>compiled_at</code>, <code>thought_count</code>) and thoughts in reverse-chronological order</li>
+<li>Writes <code>&lt;vault&gt;/&lt;domain&gt;/compiled-index.md</code></li>
+<li>Logs the run to <code>&lt;vault&gt;/meta/dream-logs/YYYY-MM-DD.md</code></li>
+</ol>
+
+<p>Run it once by hand to verify:</p>
+<pre><code>SUPABASE_URL=https://&lt;your-project&gt;.supabase.co python3 wiki-compile.py</code></pre>
+<p>The compiler reads its Supabase secret from <code>~/.open-brain-supabase-secret</code> (a single line: your service-role key). Keep it <code>chmod 600</code>.</p>
+
+<h2 id="schedule"><span class="num">06</span>Schedule</h2>
+<p>The flavor that's least magic — pure cron:</p>
+<pre><code>0 5 * * *  cd ~/open-brain &amp;&amp; /usr/bin/python3 meta/wiki-compile.py >> meta/dream-logs/cron.log 2>&amp;1</code></pre>
+<p>Or on macOS via launchd, or on Linux via systemd. Templates for all three are in <code>scheduling/</code>.</p>
+
+<h2 id="wire-cc"><span class="num">07</span>Wiring Claude Code</h2>
+<p>Add the MCP entry to <code>~/.claude.json</code> (or run <code>claude mcp add</code> if you prefer the wizard):</p>
+<pre><code>{
+  <span class="tk-str">"mcpServers"</span>: {
+    <span class="tk-str">"open-brain"</span>: {
+      <span class="tk-str">"type"</span>: <span class="tk-str">"http"</span>,
+      <span class="tk-str">"url"</span>: <span class="tk-str">"https://&lt;your-project&gt;.supabase.co/functions/v1/open-brain-mcp"</span>,
+      <span class="tk-str">"headers"</span>: { <span class="tk-str">"x-brain-key"</span>: <span class="tk-str">"&lt;your MCP_ACCESS_KEY&gt;"</span> }
+    }
+  }
+}</code></pre>
+<p>Restart Claude Code. The four tools become callable from any session.</p>
+
+<h2 id="wire-desktop"><span class="num">08</span>Wiring Claude Desktop</h2>
+<p>Settings → Connectors → Add custom connector → paste the same URL plus the <code>x-brain-key</code> header. The tools show up in the assistant UI.</p>
+
+<h2 id="first"><span class="num">09</span>Capturing your first thought</h2>
+<p>In any Claude session:</p>
+<div class="callout">
+  remember this: kicked off Open Brain today. domains will be <code>&lt;a&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;c&gt;</code>.
+</div>
+<p>The AI calls <code>capture_thought</code> for you. Verify in Supabase Studio:</p>
+<pre><code><span class="tk-kw">SELECT</span> id, content, metadata <span class="tk-kw">FROM</span> thoughts <span class="tk-kw">ORDER BY</span> created_at <span class="tk-kw">DESC LIMIT</span> 5;</code></pre>
+<p>The new row should be there with <code>metadata</code> auto-populated (topics, type, action_items). Run the compiler. The thought should appear in the appropriate <code>&lt;domain&gt;/compiled/&lt;topic&gt;.md</code>.</p>
+
+<h2 id="domains"><span class="num">10</span>Domain config</h2>
+<p>Three domains is the default shape. Pick yours up front; the compiler routes by keyword match. Examples:</p>
+<ul>
+<li><code>work</code>, <code>side-projects</code>, <code>personal</code> (default)</li>
+<li><code>team</code>, <code>oncall</code>, <code>personal</code></li>
+<li><code>research</code>, <code>writing</code>, <code>life</code></li>
+</ul>
+<p>To change the routing keyword lists, edit the <code>DOMAIN_KEYWORDS</code> block at the top of <code>wiki-compile.py</code>. That's the only opinionated part — everything else is just data.</p>
+
+<h2 id="bootstrap"><span class="num">11</span>Bootstrap checklist</h2>
+<p>The full setup, tonight, in order. Budget ~45 min.</p>
+<ol class="steps">
+<li><strong>Create a Supabase project.</strong> Free tier is fine.</li>
+<li><strong>Run the schema migration</strong> (<a href="https://github.com/kadeemalexander-cmd/open-brain-starter/blob/main/schema.sql">schema.sql</a>).</li>
+<li><strong>Deploy the Edge Function:</strong> <code>supabase functions deploy open-brain-mcp</code></li>
+<li><strong>Set the function secrets:</strong> <code>OPENROUTER_API_KEY</code>, <code>MCP_ACCESS_KEY</code></li>
+<li><strong>Smoke-test</strong> with the <code>curl</code> in §04.</li>
+<li><strong>Clone the vault skeleton</strong> to <code>~/open-brain/</code> with <code>meta/wiki-compile.py</code> and your <code>&lt;domain&gt;/compiled/</code> folders.</li>
+<li><strong>Drop your service-role key</strong> into <code>~/.open-brain-supabase-secret</code> (chmod 600).</li>
+<li><strong>Wire the MCP server into Claude Code and Claude Desktop.</strong></li>
+<li><strong>Capture your first thought</strong> through Claude. Confirm it shows up in Supabase Studio.</li>
+<li><strong>Run the compiler manually</strong> once. Confirm the markdown lands where you expect.</li>
+<li><strong>Add the cron / launchd entry</strong> for nightly compile.</li>
+<li><strong>Optional: enable memory-sync</strong> to pull your Claude Code memory files into Open Brain.</li>
+</ol>
+
+<h2 id="payoff"><span class="num">12</span>What you get when it's running</h2>
+<ul>
+<li>Every "remember this:" you say to Claude lands as a row, with embedding and structured metadata, automatically.</li>
+<li>Search across everything you've ever captured by meaning, not keyword.</li>
+<li>A markdown wiki that always reflects current truth, regenerated nightly. View it in Obsidian / VS Code / whatever.</li>
+<li>Cross-AI memory: Claude Desktop, Claude Code, Cursor, and Codex all read and write the same brain.</li>
+<li>Zero dependence on a single AI vendor for your knowledge — the data is yours, in your Supabase.</li>
+</ul>
+
+<footer class="foot">
+  <span>open-brain-starter · MIT</span>
+  <span><a href="https://github.com/kadeemalexander-cmd/open-brain-starter">github →</a></span>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  const bar = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = Math.max(0, Math.min(100, pct)) + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
